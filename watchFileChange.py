@@ -74,7 +74,8 @@ def process_new_file(file_path):
             print("Received JSON response from upload:")
             print(json.dumps(upload_json, indent=2))
             
-            data = {'hash': upload_json['hash']}
+            data = {'hash': "54ede3d1bf5da3131c126186725fa25e"}
+            time.sleep(5)
             report_json = get_report(report_url, headers, data)
             
             if report_json:
