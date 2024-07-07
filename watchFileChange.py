@@ -29,34 +29,65 @@ def save_json_report(json_data):
 def process_new_file(file_path):
     print(f"Processing new file: {file_path}")
     
-    url = 'http://127.0.0.1:8000/api/v1/report_json'
+    upload_url = 'http://127.0.0.1:8000/api/v1/upload'
+    report_url = 'http://127.0.0.1:8000/api/v1/report_json'
     headers = {
         'Authorization': 'b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465'
     }
     
-    # Prepare the data payload
-    data = {
-        'hash': "5683c6f7c03b48ab80bc2adddeff895f"
-    }
+    # Check if the file exists and has a supported extension
+    if not os.path.exists(file_path):
+        print(f"Error: File {file_path} does not exist.")
+        return
     
-    response = requests.post(url, headers=headers, data=data)
+    file_extension = os.path.splitext(file_path)[1].lower()
+    if file_extension not in ['.apk', '.zip', '.ipa', '.appx']:
+        print(f"Error: File {file_path} is not a supported type (apk, zip, ipa, appx).")
+        return
     
-    if response.status_code == 200:
+    # Prepare the file for upload
+    with open(file_path, 'rb') as file:
+        files = {'file': (os.path.basename(file_path), file, 'application/octet-stream')}
+        
+        # Send the POST request for upload
+        upload_response = requests.post(upload_url, headers=headers, files=files)
+    
+    if upload_response.status_code == 200:
         try:    
-            json_response = response.json()
-            print("Received JSON response:")
-            print(json.dumps(json_response, indent=2))
+            upload_json = upload_response.json()
+            print("Received JSON response from upload:")
+            print(json.dumps(upload_json, indent=2))
+            print(upload_json['hash'])
             
-            # Save the JSON response to a file
-            save_json_report(json_response)
+            # Prepare the data payload for report
+            data = {
+                'hash': upload_json['hash']
+            }
+            
+            # Send the POST request for report
+            report_response = requests.post(report_url, headers=headers, data=data)
+            
+            if report_response.status_code == 200:
+                try:
+                    report_json = report_response.json()
+                    print("Received JSON response from report:")
+                    print(json.dumps(report_json, indent=2))
+                    
+                    # Save the JSON response to a file
+                    save_json_report(report_json)
+                except json.JSONDecodeError:
+                    print("Received a response from report, but it was not valid JSON")
+                    print(f"Raw response: {report_response.text}")
+            else:
+                print(f"Failed to get report. Status code: {report_response.status_code}")
+                print(f"Response content: {report_response.text}")
             
         except json.JSONDecodeError:
-            print("Received a response, but it was not valid JSON")
-            print(f"Raw response: {response}")
-            print(f"Raw response: {response.text}")
+            print("Received a response from upload, but it was not valid JSON")
+            print(f"Raw response: {upload_response.text}")
     else:
-        print(f"Failed to upload file. Status code: {response.status_code}")
-        print(f"Response content: {response.text}")
+        print(f"Failed to upload file. Status code: {upload_response.status_code}")
+        print(f"Response content: {upload_response.text}")
 
 def watch_directory(path):
     event_handler = NewFileHandler()
