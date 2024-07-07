@@ -9,3 +9,6 @@ save json : curl -X POST --url http://localhost:8000/api/v1/report_json \
 
 send file and get hash : curl -F 'file=@/home/mohit/stuff/Fintech_1.0.5_APKPure.apk' http://localhost:8000/api/v1/upload -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
 
+ python3 watchFileChange.py
+
+ jupyter nbconvert --to notebook --execute ./RakshakScraper/rakshakScraper.ipynb
