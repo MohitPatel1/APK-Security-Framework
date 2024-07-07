@@ -255,12 +255,12 @@
                 </a>
               </li>
               {% endif %}
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="#secrets" class="nav-link">
                   <i class="fas fa-key nav-icon"></i>
                   <p>Hardcoded Secrets</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="#strings" class="nav-link">
                   <i class="fas fa-font nav-icon"></i>
@@ -277,7 +277,7 @@
             </a>
           </li>
           {% endif %}
-          {% if app_type not in 'so' %}
+          <!-- {% if app_type not in 'so' %}
            <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th-large"></i>
@@ -325,7 +325,7 @@
               </li>
             </ul>
           </li>
-          {% endif %}
+          {% endif %} -->
             <li class="nav-item">
               <a href="{% url "pdf" checksum=md5 %}" class="nav-link">
               <i class="nav-icon fas fa-file-pdf"></i>
@@ -334,14 +334,14 @@
               </p>
              </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="javascript:window.print()" class="nav-link">
               <i class="nav-icon fa fa-print"></i>
               <p>
                 Print Report
               </p>
              </a>
-            </li>
+            </li> -->
             {% if dynamic_analysis_done %}
             <li class="nav-item">
               <a href="{% url "dynamic_report" checksum=md5 %}" class="nav-link">
@@ -1203,9 +1203,9 @@
                               <i class="fa fa-eye-slash"></i>
                             </a>
       
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                               <a style="cursor:pointer;" class="dropdown-item" onclick="suppress('{{ item|key:"title" | android_component}}{{item|key:'rule' | escapejs }}', false, $(this.closest('tr')), true)">Suppression the rule <b>{{ item|key:"title" | android_component}}{{ item|key:'rule' }}</b> in <b>{{package_name}}</b></a>
-                            </div>
+                            </div> -->
                           </div>
                         </td>
                        </tr>

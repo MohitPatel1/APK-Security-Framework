@@ -1,0 +1,10 @@
+save pdf : curl -X POST --url http://localhost:8000/api/v1/download_pdf --data "hash=54ede3d1bf5da3131c126186725fa25e" -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
+
+save json : curl -X POST --url http://localhost:8000/api/v1/report_json --data "hash=54ede3d1bf5da3131c126186725fa25e" -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
+
+save json : curl -X POST --url http://localhost:8000/api/v1/report_json \
+     --data "hash=54ede3d1bf5da3131c126186725fa25e" \
+     -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465" \
+     > jsonReports.output.json
+
+send file and get hash : curl -F 'file=@/home/mohit/stuff/Fintech_1.0.5_APKPure.apk' http://localhost:8000/api/v1/upload -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
