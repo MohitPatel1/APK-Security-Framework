@@ -1,6 +1,8 @@
 import time
 import requests
 import json
+import os
+from datetime import datetime
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -9,6 +11,20 @@ class NewFileHandler(FileSystemEventHandler):
         if not event.is_directory:
             print(f"New file detected: {event.src_path}")
             process_new_file(event.src_path)
+
+def save_json_report(json_data):
+    # Create the jsonReports directory if it doesn't exist
+    os.makedirs("jsonReports", exist_ok=True)
+    
+    # Generate a filename with timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"jsonReports/report_{timestamp}.json"
+    
+    # Write the JSON data to the file
+    with open(filename, 'w') as f:
+        json.dump(json_data, f, indent=2)
+    
+    print(f"JSON report saved to {filename}")
 
 def process_new_file(file_path):
     print(f"Processing new file: {file_path}")
@@ -31,12 +47,8 @@ def process_new_file(file_path):
             print("Received JSON response:")
             print(json.dumps(json_response, indent=2))
             
-            # You can add more specific handling of the JSON data here
-            # For example:
-            # if 'status' in json_response and json_response['status'] == 'success':
-            #     print("File processed successfully by the API")
-            # else:
-            #     print("API reported an issue with the file")
+            # Save the JSON response to a file
+            save_json_report(json_response)
             
         except json.JSONDecodeError:
             print("Received a response, but it was not valid JSON")
