@@ -13,14 +13,17 @@ class NewFileHandler(FileSystemEventHandler):
 def process_new_file(file_path):
     print(f"Processing new file: {file_path}")
     
-    url = 'http://127.0.0.1:8000/api/v1/upload'
+    url = 'http://127.0.0.1:8000/api/v1/report_json'
     headers = {
         'Authorization': 'b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465'
     }
     
-    with open(file_path, 'rb') as file:
-        files = {'file': file}
-        response = requests.post(url, headers=headers, files=files)
+    # Prepare the data payload
+    data = {
+        'hash': "5683c6f7c03b48ab80bc2adddeff895f"
+    }
+    
+    response = requests.post(url, headers=headers, data=data)
     
     if response.status_code == 200:
         try:    
@@ -39,7 +42,6 @@ def process_new_file(file_path):
             print("Received a response, but it was not valid JSON")
             print(f"Raw response: {response}")
             print(f"Raw response: {response.text}")
-
     else:
         print(f"Failed to upload file. Status code: {response.status_code}")
         print(f"Response content: {response.text}")
