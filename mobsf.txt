@@ -1,0 +1,5 @@
+curl -F 'file=@/home/mohit/stuff/love-11.5-android.apk' http://localhost:8000/api/v1/upload -H "Authorization:664825f2cc4d9031c1ff1656255f5a75e9299b92f9cddf6299331930c7cd31d3"
+
+git branch -M main
+git remote add origin https://github.com/MohitPatel1/APK-Security-Framework.git
+git push -u origin main
