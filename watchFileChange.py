@@ -1,3 +1,5 @@
+
+
 import time
 import requests
 import json
@@ -46,10 +48,34 @@ def get_report(report_url, headers, data):
     print("Max retries reached. Could not get the report.")
     return None
 
+def scan_apk(scan_url, headers, data):
+    for attempt in range(MAX_RETRIES):
+        scaned_response = requests.post(scan_url, headers=headers, data=data)
+        if scaned_response.status_code == 200:
+            try:
+                report_json = scaned_response.json()
+                print("Scanned JSON response from report:")
+                # print(json.dumps(report_json, indent=2))
+                return report_json
+            except json.JSONDecodeError:
+                print("Scanned a response from report, but it was not valid JSON")
+                print(f"Raw response: {scaned_response.text}")
+        else:
+            print(f"Attempt {attempt + 1}: Failed to get report. Status code: {scaned_response.status_code}")
+            print(f"Response content: {scaned_response.text}")
+        
+        if attempt < MAX_RETRIES - 1:
+            print(f"Retrying in {RETRY_DELAY} seconds...")
+            time.sleep(RETRY_DELAY)
+    
+    print("Max retries reached. Could not get the report.")
+    return None
+
 def process_new_file(file_path):
     print(f"Processing new file: {file_path}")
     
     upload_url = 'http://127.0.0.1:8000/api/v1/upload'
+    scan_url = 'http://127.0.0.1:8000/api/v1/scan'
     report_url = 'http://127.0.0.1:8000/api/v1/report_json'
     headers = {
         'Authorization': 'b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465'
@@ -74,9 +100,12 @@ def process_new_file(file_path):
             print("Received JSON response from upload:")
             print(json.dumps(upload_json, indent=2))
             
+            # data = {'hash': upload_json['hash']}
             data = {'hash': "54ede3d1bf5da3131c126186725fa25e"}
             time.sleep(5)
+            # report_json = scan_apk(scan_url, headers, data)
             report_json = get_report(report_url, headers, data)
+
             
             if report_json:
                 save_json_report(report_json)
