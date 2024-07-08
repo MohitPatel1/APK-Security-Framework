@@ -3,12 +3,19 @@ save pdf : curl -X POST --url http://localhost:8000/api/v1/download_pdf --data "
 save json : curl -X POST --url http://localhost:8000/api/v1/report_json --data "hash=54ede3d1bf5da3131c126186725fa25e" -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
 
 save json : curl -X POST --url http://localhost:8000/api/v1/report_json \
-     --data "hash=54ede3d1bf5da3131c126186725fa25e" \
+     --data "hash=be7a896738075753742edb0f1991e0e6" \
      -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465" \
-     > /jsonReports/output.json
+     > jsonReports/dailyPay.json
 
 send file and get hash : curl -F 'file=@/home/mohit/stuff/Fintech_1.0.5_APKPure.apk' http://localhost:8000/api/v1/upload -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
 
  python3 watchFileChange.py
 
+ ./run.sh 127.0.0.1:8000
+
  jupyter nbconvert --to notebook --execute ./RakshakScraper/rakshakScraper.ipynb
+
+ curl -X POST --url http://localhost:8000/api/v1/scan --data "hash=48b4cd259d4b2cddbf3c5919e3b7ed66" -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
+
+ curl -X POST --url http://localhost:8000/api/v1/scan --data "hash=03171e2bb6d742e39611d2cd6562137d" -H "Authorization:b211a732f3fed3446c679382db7b2645b965495e9206ba6614e077d0bb6f7465"
+

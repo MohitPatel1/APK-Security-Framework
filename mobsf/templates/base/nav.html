@@ -10,12 +10,12 @@
         <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'recent' %}" class="nav-link">RECENT SCANS</a></li>
         <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'home' %}" class="nav-link">STATIC ANALYZER</a></li>
         <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'dynamic' %}" class="nav-link">DYNAMIC ANALYZER</a></li>
-        <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'api_docs' %}" class="nav-link">API</a></li>
-        <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'donate' %}" class="nav-link">DONATE ♥</a></li>
-        <li class="nav-item d-none d-sm-inline-block"><a target="_blank" href="https://mobsf.github.io/docs/#/" class="nav-link">DOCS</a></li>
-        <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'about' %}" class="nav-link">ABOUT</a></li>
+        <!-- <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'api_docs' %}" class="nav-link">API</a></li> -->
+        <!-- <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'donate' %}" class="nav-link">DONATE ♥</a></li> -->
+        <!-- <li class="nav-item d-none d-sm-inline-block"><a target="_blank" href="https://mobsf.github.io/docs/#/" class="nav-link">DOCS</a></li> -->
+        <!-- <li class="nav-item d-none d-sm-inline-block"><a href="{% url 'about' %}" class="nav-link">ABOUT</a></li> -->
 
-        {% if user.is_authenticated %}
+        <!-- {% if user.is_authenticated %}
         <li class="nav-item dropdown">
           <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
@@ -26,10 +26,10 @@
           <li><a href="{% url 'logout' %}" class="dropdown-item"><i class="fa fa-power-off" aria-hidden="true"></i> Logout </a></li>
           </ul>
         </li>
-        {% endif %}
+        {% endif %} -->
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3" action="/search" method="GET">
+    <!-- <form class="form-inline ml-3" action="/search" method="GET">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" id="navbar-search-input" type="search" placeholder="Search MD5" name="md5" aria-label="Search">
         <div class="input-group-append">
@@ -38,7 +38,7 @@
           </button>
         </div>
       </div>
-    </form>
+    </form> -->
 
   </ul>
 
